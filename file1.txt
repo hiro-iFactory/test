@@ -15,11 +15,11 @@ function if_pronto_avenue_get_instance($server, $email_address, $password) {
 
   static $pronto_avenue = null;
 
-  // Added at dev
+  // Added at live
   if (is_null($pronto_avenue)) {
     module_load_include('inc', 'if_pronto_avenue');
     try {
-      // Added at dev
+      // Added at live
       $pronto_avenue = new if_pronto_avenue(array(
         'server' => $server,
         'email_address' => $email_address,
