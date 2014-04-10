@@ -25,8 +25,10 @@ function if_pronto_avenue_get_instance($server, $email_address, $password) {
         'email_address' => $email_address,
         'password' => $password,
       ));
+      // Added at dev
       $pronto_avenue->authenticate();
     } catch (Exception $e) {
+      // Added at dev
       $pronto_avenue = $e->getMessage();
       watchdog(
         'if_pronto_avenue',
