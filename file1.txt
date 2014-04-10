@@ -1,4 +1,37 @@
-123
-456
-// At Live
-789
+<?php
+
+/**
+ * Gets instance of Pronto object
+ *
+ * @param string $server Server URL
+ * @param string $email_address Username
+ * @param string $password Password
+ *
+ * @return if_pronto_avenue
+ *   Instance of Pronto object if succeeded authentication.
+ *   String (error message) if error occured.
+ */
+function if_pronto_avenue_get_instance($server, $email_address, $password) {
+
+  static $pronto_avenue = null;
+
+  if (is_null($pronto_avenue)) {
+    module_load_include('inc', 'if_pronto_avenue');
+    try {
+      $pronto_avenue = new if_pronto_avenue(array(
+        'server' => $server,
+        'email_address' => $email_address,
+        'password' => $password,
+      ));
+      $pronto_avenue->authenticate();
+    } catch (Exception $e) {
+      $pronto_avenue = $e->getMessage();
+      watchdog(
+        'if_pronto_avenue',
+        'Authentication Failed - '.$e->getMessage().' - Amending Server, Email and Password at admin/config/services/pronto may resolve this issue'
+      );
+    }
+  }
+  return $pronto_avenue;
+}
+
